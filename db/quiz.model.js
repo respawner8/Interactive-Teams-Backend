@@ -11,10 +11,7 @@ const QuestionSchema = new Schema({
 
 const QuizSchema = new Schema({
   quizName: String,
-  quizCreator: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-  },
+  quizCreator: String,
   questions: [QuestionSchema]
 });
 

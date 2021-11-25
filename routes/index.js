@@ -29,14 +29,23 @@ router
   });
 });
 
-router.post("/questionSubmit", (req, res) => {
+router.post("/createQuiz", (req, res) => {
+  const newQuiz = new Quiz({
+    quizName : req.body.quizName,
+    quizCreator : req.body.quizCreator,
+    questions : req.body.questions
+  })
   Quiz.find({ quizName: req.body.quizName})
   .exec()
   .then((quiz) => {
     if(quiz.length > 0) {
-      quiz.questions.push(req.body.question)
+      res.json({"message" : "quiz name already set" , "check" : "0"})
+    }else{
+      newQuiz.save();
+      res.json({"message" : `quiz created with code ${req.body.quizName}` , "check" : "1"})
     }
-      
+  }).catch((err)=>{
+    console.log(err);
   })
 })
 module.exports = router;
